@@ -1,0 +1,11 @@
+pydub>=0.25.1
+SoundFile>=0.12.1
+numpy>=1.24.0
+cryptography>=41.0
+# Notes:
+# - pydub uses ffmpeg/avlib under the hood to read/write many formats. Install ffmpeg separately (system package).
+# - SoundFile (pysoundfile) requires libsndfile on the system for some formats. Install with your package manager (e.g., apt, brew).
+
+# Notes:
+# - pydub uses ffmpeg/avlib under the hood to read/write many formats. Install ffmpeg separately (system package).
+# - SoundFile (pysoundfile) requires libsndfile on the system for some formats. Install with your package manager (e.g., apt, brew).
