@@ -16,6 +16,6 @@ export default defineConfig(({ mode }) => ({
     },
   },
   optimizeDeps: {
-    exclude: ['@ffmpeg/ffmpeg'],
+     include: ["@ffmpeg/ffmpeg/dist/esm/index.js"],
   }
 }));
