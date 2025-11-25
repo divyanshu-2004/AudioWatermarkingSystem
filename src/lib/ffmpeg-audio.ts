@@ -1,15 +1,24 @@
 import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 
 let ffmpegInstance: ReturnType<typeof createFFmpeg> | null = null;
-
+let isLoaded = false;
 async function getFFmpeg() {
   if (!ffmpegInstance) {
     ffmpegInstance = createFFmpeg({
       log: true,
-      corePath: "https://unpkg.com/@ffmpeg/core@0.11.6/dist/ffmpeg-core.js",
+      // corePath: "https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js",
+      corePath: "/ffmpeg-core/ffmpeg-core.js",
+      wasmPath: "/ffmpeg-core/ffmpeg-core.wasm", // ADD THIS
     });
 
+    // await ffmpegInstance.load();
+  }
+
+  if (!isLoaded) {
+    console.log("FFmpeg loading…");
     await ffmpegInstance.load();
+    isLoaded = true;
+    console.log("FFmpeg loaded ✔");
   }
 
   return ffmpegInstance;
@@ -17,6 +26,7 @@ async function getFFmpeg() {
 
 export async function mp3ToWav(mp3File: File | Blob): Promise<Blob> {
   const ffmpeg = await getFFmpeg();
+  console.log("this is runnig")
   ffmpeg.FS("writeFile", "input.mp3", await fetchFile(mp3File));
 
   await ffmpeg.run("-i", "input.mp3", "-ar", "44100", "-ac", "1", "-sample_fmt", "s16", "output.wav");
